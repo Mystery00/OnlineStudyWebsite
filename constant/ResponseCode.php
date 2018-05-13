@@ -1,0 +1,24 @@
+<?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: myste
+ * Date: 05/13/2018
+ * Time: 21:30
+ */
+
+define('RESULT_OK', 0);
+define('NOT_LOGIN', 1);
+
+define('REGISTER_RESULT_FIELD_USERNAME', 1);
+define('REGISTER_RESULT_FIELD_PASSWORD', 2);
+define('REGISTER_RESULT_FIELD_USER_TYPE', 3);
+define('REGISTER_RESULT_EXIST_USER', 4);
+define('REGISTER_RESULT_REGISTER_ERROR', 5);
+define('REGISTER_RESULT_DATABASE_ERROR', 6);
+
+define('LOGIN_RESULT_FIELD_USERNAME', 1);
+define('LOGIN_RESULT_FIELD_PASSWORD', 2);
+define('LOGIN_RESULT_NO_USER', 3);
+define('LOGIN_RESULT_LOGIN_ERROR', 4);
+define('LOGIN_RESULT_DATABASE_ERROR', 5);
+
