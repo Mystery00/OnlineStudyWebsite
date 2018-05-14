@@ -6,5 +6,5 @@
  * Time: 21:30
  */
 
-define('URL', 'https://');
-define('PORT', '/OnlineStudyWebsite');
+define('URL', 'http://');
+define('PORT', '');

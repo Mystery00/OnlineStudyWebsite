@@ -6,7 +6,7 @@
  * Time: 01:31
  */
 
-define('DIR', $_SERVER['DOCUMENT_ROOT'].'/OnlineStudyWebsite');
+define('DIR', $_SERVER['DOCUMENT_ROOT']);
 require DIR . '/config/config.php';
 require DIR . '/config/database.php';
 
