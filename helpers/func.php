@@ -13,6 +13,10 @@ function check_cookie(Response $response)
             return_data($response);
         } else
             $_SESSION['expire_time'] = time() + 60 * 10;
+    else {
+        $response->format($response->NOT_LOGIN);
+        return_data($response);
+    }
 
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_type'])) {
         $response->format($response->NOT_LOGIN);
