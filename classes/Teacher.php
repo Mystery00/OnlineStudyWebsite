@@ -48,7 +48,18 @@ class Teacher
         $result = $mysqli->query($sql);
         if ($result->num_rows == 0)
             return $response->NO_USER;
-        $sql = "UPDATE tb_teacher SET teacher_name='$this->teacherName',teacher_sex='$this->teacherSex',teacher_birthday='$this->teacherBirthday' WHERE teacher_id='$this->teacherID'";
+        $sql = "UPDATE tb_teacher SET ";
+        if ($this->teacherName != '') {
+            $sql = $sql . "teacher_name='$this->teacherName',";
+        }
+        if ($this->teacherSex != '') {
+            $sql = $sql . "teacher_sex='$this->teacherSex',";
+        }
+        if ($this->teacherBirthday != '') {
+            $sql = $sql . "teacher_birthday='$this->teacherName',";
+        }
+        $sql = substr($sql, 0, strlen($sql) - 1);
+        $sql = $sql . " WHERE teacher_id='$this->teacherID'";
         $result = $mysqli->query($sql);
         if (!$result)
             return $response->UNKNOWN_ERROR;

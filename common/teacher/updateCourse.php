@@ -8,21 +8,27 @@
 
 require '../common.php';
 
-$courseName = $courseIntroduce = $courseTime = '';
+$courseID = $courseName = $courseIntroduce = $courseTime = '';
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'POST':
+        $courseID = $_POST['courseID'];
         $courseName = $_POST['courseName'];
         $courseIntroduce = $_POST['courseIntroduce'];
         $courseTime = $_POST['courseTime'];
         break;
     case 'GET':
+        $courseID = $_GET['courseID'];
         $courseName = $_GET['courseName'];
         $courseIntroduce = $_GET['courseIntroduce'];
         $courseTime = $_GET['courseTime'];
         break;
 }
-$response = new NewCourseResponse();
+$response = new UpdateInfoResponse();
+if ($courseID == '') {
+    $response->format($response->EMPTY_COURSE_ID);
+    return_data($response);
+}
 if ($courseName == '') {
     $response->format($response->EMPTY_COURSE_NAME);
     return_data($response);
@@ -38,25 +44,13 @@ if ($user->userType != 'teacher') {
     $response->format($response->USER_TYPE_ERROR);
     return_data($response);
 }
-$teacher = new Teacher();
-$teacher->teacherID = $user->linkID;
-$get_info_response = new GetInfoResponse();
-$get_info_result = $teacher->getInfo($mysqli, $get_info_response);
-if ($get_info_result == $get_info_response->NO_USER) {
-    $response->format($response->NO_TEACHER);
-    return_data($response);
-}
-if ($teacher->teacherName == '') {
-    $response->format($response->EMPTY_TEACHER_INFO);
-    return_data($response);
-}
 $course = new Course();
+$course->courseID = $courseID;
 $course->courseName = $courseName;
 $course->courseIntroduce = $courseIntroduce;
 $course->courseTime = $courseTime;
-$course->teacherID = $user->linkID;
 
-$result = $course->new_course($mysqli, $response);
+$result = $course->update_course($mysqli, $response);
 update_session();
 $mysqli->close();
 return_data($response, $result);

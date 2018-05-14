@@ -22,9 +22,6 @@ class RegisterResponse extends Response
             case $this->EMPTY_FIELD_PASSWORD:
                 $this->message = '密码为空';
                 break;
-            case $this->REGISTER_ERROR:
-                $this->message = '注册失败';
-                break;
             case $this->EXIST_USER:
                 $this->message = '用户已存在';
                 break;

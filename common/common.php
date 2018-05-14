@@ -17,6 +17,7 @@ require DIR . '/classes/Response.php';
 require DIR . '/classes/Student.php';
 require DIR . '/classes/Teacher.php';
 require DIR . '/classes/User.php';
+require DIR . '/classes/ListCourse.php';
 
 require DIR . '/classes/response/ReturnResponse.php';
 require DIR . '/classes/response/LoginResponse.php';
@@ -25,6 +26,9 @@ require DIR . '/classes/response/UpdatePasswordResponse.php';
 require DIR . '/classes/response/GetInfoResponse.php';
 require DIR . '/classes/response/UpdateInfoResponse.php';
 require DIR . '/classes/response/NewCourseResponse.php';
+require DIR . '/classes/response/ChooseCourseResponse.php';
+require DIR . '/classes/response/DeleteCourseResponse.php';
+require DIR . '/classes/response/SearchCourseResponse.php';
 
 require DIR . '/helpers/func.php';
 

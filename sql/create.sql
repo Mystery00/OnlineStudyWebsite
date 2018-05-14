@@ -23,8 +23,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `db_online_study_website`.`tb_student` (
   `student_id` VARCHAR(20) NOT NULL,
   `student_name` VARCHAR(20) NOT NULL,
-  `student_sex` VARCHAR(1) NOT NULL,
-  `student_birthday` DATE NOT NULL,
+  `student_sex` VARCHAR(1),
+  `student_birthday` DATE,
   PRIMARY KEY (`student_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -33,8 +33,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `db_online_study_website`.`tb_teacher` (
   `teacher_id` VARCHAR(20) NOT NULL,
   `teacher_name` VARCHAR(20) NOT NULL,
-  `teacher_sex` VARCHAR(1) NOT NULL,
-  `teacher_birthday` DATE NOT NULL,
+  `teacher_sex` VARCHAR(1),
+  `teacher_birthday` DATE,
   PRIMARY KEY (`teacher_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -51,7 +51,7 @@ CREATE TABLE `db_online_study_website`.`tb_course` (
   CONSTRAINT `FK_course_teacher`
     FOREIGN KEY (`teacher_id`)
     REFERENCES `db_online_study_website`.`tb_teacher` (`teacher_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -67,12 +67,12 @@ CREATE TABLE `db_online_study_website`.`tb_choose` (
   CONSTRAINT `FK_choose_student`
     FOREIGN KEY (`student_id`)
     REFERENCES `db_online_study_website`.`tb_student` (`student_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_choose_course`
     FOREIGN KEY (`course_id`)
     REFERENCES `db_online_study_website`.`tb_course` (`course_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -88,7 +88,7 @@ CREATE TABLE `db_online_study_website`.`tb_resource` (
   CONSTRAINT `FK_resource_course`
     FOREIGN KEY (`course_id`)
     REFERENCES `db_online_study_website`.`tb_course` (`course_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

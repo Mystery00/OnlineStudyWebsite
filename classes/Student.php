@@ -48,7 +48,18 @@ class Student
         $result = $mysqli->query($sql);
         if ($result->num_rows == 0)
             return $response->NO_USER;
-        $sql = "UPDATE tb_student SET student_name='$this->studentName',student_sex='$this->studentSex',student_birthday='$this->studentBirthday' WHERE student_id='$this->studentID'";
+        $sql = "UPDATE tb_student SET ";
+        if ($this->studentName != '') {
+            $sql = $sql . "student_name='$this->studentName',";
+        }
+        if ($this->studentSex != '') {
+            $sql = $sql . "student_sex='$this->studentSex',";
+        }
+        if ($this->studentBirthday != '') {
+            $sql = $sql . "student_birthday='$this->studentName',";
+        }
+        $sql = substr($sql, 0, strlen($sql) - 1);
+        $sql = $sql . " WHERE student_id='$this->studentID'";
         $result = $mysqli->query($sql);
         if (!$result)
             return $response->UNKNOWN_ERROR;

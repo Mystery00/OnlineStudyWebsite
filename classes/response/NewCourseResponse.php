@@ -10,6 +10,7 @@ class NewCourseResponse extends Response
 {
     var $EMPTY_COURSE_NAME = 11;
     var $NO_TEACHER = 12;
+    var $EMPTY_TEACHER_INFO = 13;
 
     public function format($code)
     {
@@ -20,6 +21,9 @@ class NewCourseResponse extends Response
                 break;
             case $this->NO_TEACHER:
                 $this->message = '教师不存在';
+                break;
+            case $this->EMPTY_TEACHER_INFO:
+                $this->message = '请先完善教师信息';
                 break;
             default:
                 parent::format($code);
