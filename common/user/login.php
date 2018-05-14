@@ -36,11 +36,11 @@ $user->username = $username;
 $user->password = $password;
 $code = $user->login($mysqli, $response);
 if ($code == $response->RESULT_OK) {
-    update_session();
     session_start();
     $_SESSION['user_id'] = $user->userID;
     $_SESSION['user_type'] = $user->userType;
     $_SESSION['link_id'] = $user->linkID;
+    update_session();
     $response->data = array('userType' => $user->userType);
 }
 $mysqli->close();
