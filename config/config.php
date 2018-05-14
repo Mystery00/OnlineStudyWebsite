@@ -6,4 +6,5 @@
  * Time: 21:30
  */
 
-//define('DIR',$_SERVER['DOCUMENT_ROOT'].'');
+define('URL', 'http://');
+define('PORT', ':8000');

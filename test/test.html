@@ -5,14 +5,12 @@
 	<title>TestLogin</title>
 </head>
 <body>
-<form action="../common/user/getInfo.php">
-	<input type="text" name="COOKIE" value="qwe">
-	username<input type="text" name="username" value="123">
+<form action="../common/teacher/newCourseResource.php" method="post" enctype="multipart/form-data">
+	resourceName<input type="text" name="resourceName">
 	<br>
-	password<input type="text" name="password" value="1234">
+	courseID<input type="text" name="courseID">
 	<br>
-	student<input type="radio" name="userType" value="student">
-	teacher<input type="radio" name="userType" value="teacher">
+	file<input type="file" name="file">
 	<br>
 	<input type="submit" value="提交">
 </form>

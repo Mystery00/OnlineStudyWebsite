@@ -2,6 +2,7 @@
   <dictionary name="myste">
     <words>
       <w>expiretime</w>
+      <w>mkdirs</w>
     </words>
   </dictionary>
 </component>

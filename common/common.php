@@ -29,6 +29,9 @@ require DIR . '/classes/response/NewCourseResponse.php';
 require DIR . '/classes/response/ChooseCourseResponse.php';
 require DIR . '/classes/response/DeleteCourseResponse.php';
 require DIR . '/classes/response/SearchCourseResponse.php';
+require DIR . '/classes/response/NewCourseResourceResponse.php';
+require DIR . '/classes/response/ListCourseResourcesResponse.php';
+require DIR . '/classes/response/DeleteCourseResourceResponse.php';
 
 require DIR . '/helpers/func.php';
 
