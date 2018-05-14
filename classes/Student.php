@@ -29,17 +29,17 @@ class Student
             return $response->REGISTER_ERROR;
     }
 
-    function getInfo(mysqli $mysqli)
+    function getInfo(mysqli $mysqli, GetInfoResponse $response)
     {
         $sql = "SELECT * FROM tb_student WHERE student_id='$this->studentID'";
         $result = $mysqli->query($sql);
         if ($result->num_rows == 0)
-            return GET_INFO_NO_USER;
+            return $response->NO_USER;
         $sql_student = $result->fetch_assoc();
         $this->studentName = $sql_student['student_name'];
         $this->studentSex = $sql_student['student_sex'];
         $this->studentBirthday = $sql_student['student_birthday'];
-        return RESULT_OK;
+        return $response->RESULT_OK;
     }
 
     function updateInfo(mysqli $mysqli)

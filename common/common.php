@@ -21,6 +21,8 @@ require DIR . '/classes/User.php';
 require DIR . '/classes/response/ReturnResponse.php';
 require DIR . '/classes/response/LoginResponse.php';
 require DIR . '/classes/response/RegisterResponse.php';
+require DIR . '/classes/response/UpdatePasswordResponse.php';
+require DIR . '/classes/response/GetInfoResponse.php';
 
 require DIR . '/constant/ResponseCode.php';
 

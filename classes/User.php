@@ -66,52 +66,53 @@ class User
         return $response->RESULT_OK;
     }
 
-    function getInfo(mysqli $mysqli)
+    function getInfo(mysqli $mysqli, GetInfoResponse $response)
     {
         $sql = "SELECT link_id FROM tb_user WHERE user_id='$this->userID'";
         $result = $mysqli->query($sql);
         if ($result->num_rows == 0)
-            return GET_INFO_NO_USER;
+            return $response->NO_USER;
         $sql_user = $result->fetch_assoc();
         $this->linkID = $sql_user['link_id'];
         switch ($this->userType) {
             case 'student':
                 $student = new Student();
                 $student->studentID = $this->linkID;
-                $get_info_result = $student->getInfo($mysqli);
-                if ($get_info_result == RESULT_OK) {
-                    echo get_info_format(RESULT_OK, $student);
-                    return true;
+                $get_info_result = $student->getInfo($mysqli, $response);
+                if ($get_info_result == $response->RESULT_OK) {
+                    return $student;
                 }
                 break;
             case 'teacher':
                 $teacher = new Teacher();
                 $teacher->teacherID = $this->linkID;
-                $get_info_result = $teacher->getInfo($mysqli);
-                if ($get_info_result == RESULT_OK) {
-                    echo get_info_format(RESULT_OK, $teacher);
-                    return true;
+                $get_info_result = $teacher->getInfo($mysqli, $response);
+                if ($get_info_result == $response->RESULT_OK) {
+                    return $teacher;
                 }
                 break;
             default:
-                return USER_TYPE_ERROR;
+                return $response->USER_TYPE_ERROR;
                 break;
         }
-        return GET_INFO_NO_USER;
+        return $response->NO_USER;
     }
 
-    function updatePassword(mysqli $mysqli, $newPassword)
+    function updatePassword(mysqli $mysqli, $newPassword, UpdatePasswordResponse $response)
     {
-        $login_result = $this->login($mysqli);
-        if ($login_result == RESULT_OK) {
-            $sql = "UPDATE tb_user SET password='$newPassword' WHERE user_id='$this->userID'";
-            $mysqli->query($sql);
-            return RESULT_OK;
-        } else
-            return $login_result;
+        $check_sql = "SELECT * FROM tb_user WHERE user_id='$this->userID'";
+        $check_result = $mysqli->query($check_sql);
+        if ($check_result->num_rows == 0)
+            return $response->NO_USER;
+        if ($check_result->fetch_assoc()['password'] != $this->password)
+            return $response->PASSWORD_ERROR;
+        $sql = "UPDATE tb_user SET password='$newPassword' WHERE user_id='$this->userID'";
+        $mysqli->query($sql);
+        return $response->RESULT_OK;
     }
 
-    private function isUserExist(mysqli $mysqli)
+    private
+    function isUserExist(mysqli $mysqli)
     {
         $sql = "SELECT * from tb_user WHERE username='$this->username'";
         $result = $mysqli->query($sql);

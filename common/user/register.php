@@ -8,7 +8,7 @@
 
 require '../common.php';
 
-$username = $password = $userType = "";
+$username = $password = $userType = '';
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'POST':

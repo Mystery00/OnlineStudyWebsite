@@ -8,7 +8,7 @@
 
 require '../common.php';
 
-$username = $password = "";
+$username = $password = '';
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'POST':
@@ -40,12 +40,11 @@ $user->username = $username;
 $user->password = $password;
 $code = $user->login($mysqli, $response);
 if ($code == $response->RESULT_OK) {
-    session_name('cookie');
+    update_session();
     session_start();
-    $expire = time() + 60 * 10;
     $_SESSION['user_id'] = $user->userID;
     $_SESSION['user_type'] = $user->userType;
-    $_SESSION['expire_time'] = $expire;
+    $response->data = array('userType' => $user->userType);
 }
 $mysqli->close();
 return_data($response, $code);

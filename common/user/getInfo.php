@@ -8,10 +8,11 @@
 
 require '../common.php';
 
+$response = new GetInfoResponse();
 //检查是否有cookie
 if (!isset($_COOKIE['cookie'])) {
-    echo get_info_format(NOT_LOGIN, null);
-    return;
+    $response->format($response->NOT_LOGIN);
+    return_data($response);
 }
 
 //检查session是否过期
@@ -23,21 +24,31 @@ if (isset($_SESSION['expire_time']))
         unset($_SESSION['user_id']);
         unset($_SESSION['user_type']);
         unset($_SESSION['expire_time']);
-        echo get_info_format(NOT_LOGIN, null);
-        return;
+        $response->format($response->NOT_LOGIN);
+        return_data($response);
     } else
         $_SESSION['expire_time'] = time() + 60 * 10;
 
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_type'])) {
+    $response->format($response->NOT_LOGIN);
+    return_data($response);
+}
 //建立数据库连接
 $mysqli = connect();
 if (!$mysqli) {
-    echo get_info_format(LOGIN_RESULT_DATABASE_ERROR, null);
-    return;
+    $response->format($response->DATABASE_ERROR);
+    return_data($response);
 }
 $user = new User();
 $user->userID = $_SESSION['user_id'];
 $user->userType = $_SESSION['user_type'];
-$get_info_result = $user->getInfo($mysqli);
-if ($get_info_result)
-    return;
-echo get_info_format($get_info_result, null);
+$get_info_result = $user->getInfo($mysqli, $response);
+update_session();
+$mysqli->close();
+if (is_int($get_info_result)) {
+    return_data($response, $get_info_result);
+} else {
+    $response->code = $response->RESULT_OK;
+    $response->data = $get_info_result;
+    return_data($response);
+}

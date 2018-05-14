@@ -1,5 +1,10 @@
 <?php
 
+function update_session(){
+    $expire = time() + 60 * 10;
+    $_SESSION['expire_time'] = $expire;
+}
+
 function return_data()
 {
     $args = func_get_args();
