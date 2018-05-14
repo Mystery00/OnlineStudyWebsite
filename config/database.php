@@ -7,6 +7,6 @@
  */
 
 define('SERVER_NAME', 'localhost');
-define('DB_USERNAME', 'root');
+define('DB_USERNAME', 'mystery0');
 define('DB_PASSWORD', 'Mystery0dyl');
 define('DB_NAME', 'db_online_study_website');
