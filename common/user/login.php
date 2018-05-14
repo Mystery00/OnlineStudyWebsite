@@ -29,11 +29,7 @@ if ($password == '') {
     $response->format($response->EMPTY_FIELD_PASSWORD);
     return_data($response);
 }
-$mysqli = connect();
-if (!$mysqli) {
-    $response->format($response->DATABASE_ERROR);
-    return_data($response);
-}
+$mysqli = check_database($response);
 
 $user = new User();
 $user->username = $username;

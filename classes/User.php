@@ -66,6 +66,17 @@ class User
         return $response->RESULT_OK;
     }
 
+    function get_link_id(mysqli $mysqli, UpdateInfoResponse $response)
+    {
+        $sql = "SELECT link_id FROM tb_user WHERE user_id='$this->userID'";
+        $result = $mysqli->query($sql);
+        if ($result->num_rows == 0)
+            return $response->NO_USER;
+        $sql_user = $result->fetch_assoc();
+        $this->linkID = $sql_user['link_id'];
+        return $response->RESULT_OK;
+    }
+
     function getInfo(mysqli $mysqli, GetInfoResponse $response)
     {
         $sql = "SELECT link_id FROM tb_user WHERE user_id='$this->userID'";

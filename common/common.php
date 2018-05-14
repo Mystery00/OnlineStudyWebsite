@@ -23,8 +23,9 @@ require DIR . '/classes/response/LoginResponse.php';
 require DIR . '/classes/response/RegisterResponse.php';
 require DIR . '/classes/response/UpdatePasswordResponse.php';
 require DIR . '/classes/response/GetInfoResponse.php';
+require DIR . '/classes/response/UpdateInfoResponse.php';
 
-require DIR . '/constant/ResponseCode.php';
+require DIR . '/helpers/func.php';
 
 require DIR . '/util/MysqlUtil.php';
 require DIR . '/util/ResponseUtil.php';

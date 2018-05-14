@@ -41,4 +41,18 @@ class Teacher
         $this->teacherBirthday = $sql_student['teacher_birthday'];
         return $response->RESULT_OK;
     }
+
+    function updateInfo(mysqli $mysqli, UpdateInfoResponse $response)
+    {
+        $sql = "SELECT * FROM tb_teacher WHERE teacher_id='$this->teacherID'";
+        $result = $mysqli->query($sql);
+        if ($result->num_rows == 0)
+            return $response->NO_USER;
+        $sql = "UPDATE tb_teacher SET teacher_name='$this->teacherName',teacher_sex='$this->teacherSex',teacher_birthday='$this->teacherBirthday' WHERE teacher_id='$this->teacherID'";
+        $result = $mysqli->query($sql);
+        if (!$result)
+            return $response->UNKNOWN_ERROR;
+        else
+            return $response->RESULT_OK;
+    }
 }

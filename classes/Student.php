@@ -42,8 +42,17 @@ class Student
         return $response->RESULT_OK;
     }
 
-    function updateInfo(mysqli $mysqli)
+    function updateInfo(mysqli $mysqli, UpdateInfoResponse $response)
     {
-
+        $sql = "SELECT * FROM tb_student WHERE student_id='$this->studentID'";
+        $result = $mysqli->query($sql);
+        if ($result->num_rows == 0)
+            return $response->NO_USER;
+        $sql = "UPDATE tb_student SET student_name='$this->studentName',student_sex='$this->studentSex',student_birthday='$this->studentBirthday' WHERE student_id='$this->studentID'";
+        $result = $mysqli->query($sql);
+        if (!$result)
+            return $response->UNKNOWN_ERROR;
+        else
+            return $response->RESULT_OK;
     }
 }
