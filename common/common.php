@@ -18,6 +18,7 @@ require DIR . '/classes/Student.php';
 require DIR . '/classes/Teacher.php';
 require DIR . '/classes/User.php';
 require DIR . '/classes/ListCourse.php';
+require DIR . '/classes/CourseGrade.php';
 
 require DIR . '/classes/response/ReturnResponse.php';
 require DIR . '/classes/response/LoginResponse.php';
@@ -32,6 +33,7 @@ require DIR . '/classes/response/SearchCourseResponse.php';
 require DIR . '/classes/response/NewCourseResourceResponse.php';
 require DIR . '/classes/response/ListCourseResourcesResponse.php';
 require DIR . '/classes/response/DeleteCourseResourceResponse.php';
+require DIR . '/classes/response/UpdateStudentCourseResponse.php';
 
 require DIR . '/helpers/func.php';
 
