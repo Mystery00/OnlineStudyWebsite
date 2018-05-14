@@ -1,92 +1,40 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: myste
- * Date: 05/13/2018
- * Time: 18:46
- */
 
-function register_format($code)
+function return_data()
 {
-    $response = new Response();
-    $response->code = $code;
-    switch ($code) {
-        case RESULT_OK:
-            $message = '成功';
+    $args = func_get_args();
+    switch (func_num_args()) {
+        case 1:
+            return_data1($args[0]);
             break;
-        case REGISTER_RESULT_FIELD_USERNAME:
-            $message = '用户名为空';
-            break;
-        case REGISTER_RESULT_FIELD_PASSWORD:
-            $message = '密码为空';
-            break;
-        case REGISTER_RESULT_FIELD_USER_TYPE:
-            $message = '用户类型错误';
-            break;
-        case REGISTER_RESULT_EXIST_USER:
-            $message = '用户已存在';
-            break;
-        case REGISTER_RESULT_REGISTER_ERROR:
-            $message = '注册失败';
-            break;
-        case REGISTER_RESULT_DATABASE_ERROR:
-            $message = '数据库错误';
-            break;
-        default:
-            $message = '未知错误';
+        case 2:
+            return_data2($args[0], $args[1]);
             break;
     }
-    $response->message = $message;
-    return json_encode($response);
 }
 
-function login_format($code)
+function return_data1(Response $response)
 {
-    $response = new Response();
-    $response->code = $code;
-    switch ($code) {
-        case RESULT_OK:
-            $message = '成功';
-            break;
-        case LOGIN_RESULT_FIELD_USERNAME:
-            $message = '用户名为空';
-            break;
-        case LOGIN_RESULT_FIELD_PASSWORD:
-            $message = '密码为空';
-            break;
-        case LOGIN_RESULT_NO_USER:
-            $message = '用户不存在';
-            break;
-        case LOGIN_RESULT_LOGIN_ERROR:
-            $message = '密码错误';
-            break;
-        case LOGIN_RESULT_DATABASE_ERROR:
-            $message = '数据库错误';
-            break;
-        default:
-            $message = '未知错误';
-            break;
-    }
-    $response->message = $message;
-    return json_encode($response);
+    if (!isset($response->code))
+        $response->code = $response->UNKNOWN_ERROR;
+    $response->format($response->code);
+    $return_response = new ReturnResponse();
+    $return_response->code = $response->code;
+    $return_response->data = $response->data;
+    $return_response->message = $response->message;
+    echo json_encode($return_response);
+    exit(0);
 }
 
-function common_format($code, $data)
+function return_data2(Response $response, $code)
 {
-    $response = new Response();
-    $response->code = $code;
-    switch ($code) {
-        case RESULT_OK:
-            $message = '成功';
-            $response->data = $data;
-            break;
-        case NOT_LOGIN:
-            $message = '未登录';
-            break;
-        default:
-            $message = '未知错误';
-            break;
-    }
-    $response->message = $message;
-    return json_encode($response);
+    if (!isset($code))
+        $response->code = $response->UNKNOWN_ERROR;
+    $response->format($code);
+    $return_response = new ReturnResponse();
+    $return_response->code = $response->code;
+    $return_response->data = $response->data;
+    $return_response->message = $response->message;
+    echo json_encode($return_response);
+    exit(0);
 }

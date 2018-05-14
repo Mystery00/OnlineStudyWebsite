@@ -20,31 +20,32 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $password = $_GET['password'];
         break;
 }
-
+$response = new LoginResponse();
 if ($username == '') {
-    echo login_format(LOGIN_RESULT_FIELD_USERNAME);
-    return;
+    $response->format($response->EMPTY_FIELD_USERNAME);
+    return_data($response);
 }
 if ($password == '') {
-    echo login_format(LOGIN_RESULT_FIELD_PASSWORD);
-    return;
+    $response->format($response->EMPTY_FIELD_PASSWORD);
+    return_data($response);
 }
 $mysqli = connect();
 if (!$mysqli) {
-    echo login_format(LOGIN_RESULT_DATABASE_ERROR);
-    return;
+    $response->format($response->DATABASE_ERROR);
+    return_data($response);
 }
 
 $user = new User();
 $user->username = $username;
 $user->password = $password;
-$code = $user->login($mysqli);
-if ($code==RESULT_OK){
-    $expire = time() + 60 * 10;
+$code = $user->login($mysqli, $response);
+if ($code == $response->RESULT_OK) {
     session_name('cookie');
+    session_start();
+    $expire = time() + 60 * 10;
     $_SESSION['user_id'] = $user->userID;
     $_SESSION['user_type'] = $user->userType;
-    setcookie(session_name(), strtoupper(session_id()), $expire);
+    $_SESSION['expire_time'] = $expire;
 }
-echo login_format($code);
 $mysqli->close();
+return_data($response, $code);

@@ -12,4 +12,38 @@ class Student
     var $studentName;
     var $studentSex;
     var $studentBirthday;
+
+    function register(mysqli $mysqli, RegisterResponse $response)
+    {
+        $date = date("Y-m-d H:i:s");
+        $md5Str = $this->studentName . $date;
+        $this->studentID = substr(strtoupper(md5($md5Str)), 0, 20);
+        $this->studentName = '';
+        $this->studentSex = '';
+        $this->studentBirthday = $date;
+        $sql = "insert into tb_student(student_id, student_name, student_sex, student_birthday) VALUES('$this->studentID','$this->studentName','$this->studentSex','$this->studentBirthday')";
+        $result = $mysqli->query($sql);
+        if ($result == TRUE)
+            return $response->RESULT_OK;
+        else
+            return $response->REGISTER_ERROR;
+    }
+
+    function getInfo(mysqli $mysqli)
+    {
+        $sql = "SELECT * FROM tb_student WHERE student_id='$this->studentID'";
+        $result = $mysqli->query($sql);
+        if ($result->num_rows == 0)
+            return GET_INFO_NO_USER;
+        $sql_student = $result->fetch_assoc();
+        $this->studentName = $sql_student['student_name'];
+        $this->studentSex = $sql_student['student_sex'];
+        $this->studentBirthday = $sql_student['student_birthday'];
+        return RESULT_OK;
+    }
+
+    function updateInfo(mysqli $mysqli)
+    {
+
+    }
 }

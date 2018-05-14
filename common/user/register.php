@@ -23,32 +23,34 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
 }
 
+$response = new RegisterResponse();
 if ($username == '') {
-    echo register_format(REGISTER_RESULT_FIELD_USERNAME);
-    return;
+    $response->code=$response->EMPTY_FIELD_USERNAME;
+    return_data($response);
 }
 if ($password == '') {
-    echo register_format(REGISTER_RESULT_FIELD_PASSWORD);
-    return;
+    $response->code=$response->EMPTY_FIELD_PASSWORD;
+    return_data($response);
 }
 if ($userType == '') {
-    echo register_format(REGISTER_RESULT_FIELD_USER_TYPE);
-    return;
+    $response->code=$response->USER_TYPE_ERROR;
+    return_data($response);
 }
 if ($userType != 'student' && $userType != 'teacher') {
-    echo register_format(REGISTER_RESULT_FIELD_USER_TYPE);
-    return;
+    $response->code=$response->USER_TYPE_ERROR;
+    return_data($response);
 }
 $mysqli = connect();
 if (!$mysqli) {
-    echo register_format(REGISTER_RESULT_DATABASE_ERROR);
-    return;
+    $response->format($response->DATABASE_ERROR);
+    return_data($response);
 }
 
 $user = new User();
 $user->username = $username;
 $user->password = $password;
 $user->userType = $userType;
-$code = $user->register($mysqli);
-echo register_format($code);
+$code = $user->register($mysqli,$response);
+
 $mysqli->close();
+return_data($response,$code);

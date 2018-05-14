@@ -3,7 +3,7 @@
  * Created by IntelliJ IDEA.
  * User: myste
  * Date: 05/14/2018
- * Time: 04:19
+ * Time: 12:49
  */
 
 require '../common.php';
@@ -34,10 +34,7 @@ if (!$mysqli) {
     echo get_info_format(LOGIN_RESULT_DATABASE_ERROR, null);
     return;
 }
+
 $user = new User();
 $user->userID = $_SESSION['user_id'];
 $user->userType = $_SESSION['user_type'];
-$get_info_result = $user->getInfo($mysqli);
-if ($get_info_result)
-    return;
-echo get_info_format($get_info_result, null);
