@@ -22,15 +22,15 @@ class User
                 case 'student':
                     $student = new Student();
                     $register_student_result = $student->register($mysqli, $response);
-                    if ($register_student_result == $response->REGISTER_ERROR)
-                        return $response->REGISTER_ERROR;
+                    if ($register_student_result == $response->UNKNOWN_ERROR)
+                        return $response->UNKNOWN_ERROR;
                     $this->linkID = $student->studentID;
                     break;
                 case 'teacher':
                     $teacher = new Teacher();
                     $register_teacher_result = $teacher->register($mysqli, $response);
-                    if ($register_teacher_result == $response->REGISTER_ERROR)
-                        return $response->REGISTER_ERROR;
+                    if ($register_teacher_result == $response->UNKNOWN_ERROR)
+                        return $response->UNKNOWN_ERROR;
                     $this->linkID = $teacher->teacherID;
                     break;
                 default:
@@ -44,7 +44,7 @@ class User
             if ($result == TRUE)
                 return $response->RESULT_OK;
             else
-                return $response->REGISTER_ERROR;
+                return $response->UNKNOWN_ERROR;
         } else {
             return $response->EXIST_USER;
         }
@@ -63,50 +63,8 @@ class User
             return $response->LOGIN_ERROR;
         $this->userID = $sql_user['user_id'];
         $this->userType = $sql_user['user_type'];
-        return $response->RESULT_OK;
-    }
-
-    function get_link_id(mysqli $mysqli, UpdateInfoResponse $response)
-    {
-        $sql = "SELECT link_id FROM tb_user WHERE user_id='$this->userID'";
-        $result = $mysqli->query($sql);
-        if ($result->num_rows == 0)
-            return $response->NO_USER;
-        $sql_user = $result->fetch_assoc();
         $this->linkID = $sql_user['link_id'];
         return $response->RESULT_OK;
-    }
-
-    function getInfo(mysqli $mysqli, GetInfoResponse $response)
-    {
-        $sql = "SELECT link_id FROM tb_user WHERE user_id='$this->userID'";
-        $result = $mysqli->query($sql);
-        if ($result->num_rows == 0)
-            return $response->NO_USER;
-        $sql_user = $result->fetch_assoc();
-        $this->linkID = $sql_user['link_id'];
-        switch ($this->userType) {
-            case 'student':
-                $student = new Student();
-                $student->studentID = $this->linkID;
-                $get_info_result = $student->getInfo($mysqli, $response);
-                if ($get_info_result == $response->RESULT_OK) {
-                    return $student;
-                }
-                break;
-            case 'teacher':
-                $teacher = new Teacher();
-                $teacher->teacherID = $this->linkID;
-                $get_info_result = $teacher->getInfo($mysqli, $response);
-                if ($get_info_result == $response->RESULT_OK) {
-                    return $teacher;
-                }
-                break;
-            default:
-                return $response->USER_TYPE_ERROR;
-                break;
-        }
-        return $response->NO_USER;
     }
 
     function updatePassword(mysqli $mysqli, $newPassword, UpdatePasswordResponse $response)

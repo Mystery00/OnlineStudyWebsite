@@ -15,7 +15,28 @@ $mysqli = check_database($response);
 $user = new User();
 $user->userID = $_SESSION['user_id'];
 $user->userType = $_SESSION['user_type'];
-$get_info_result = $user->getInfo($mysqli, $response);
+$user->linkID = $_SESSION['link_id'];
+switch ($user->userType) {
+    case 'student':
+        $student = new Student();
+        $student->studentID = $user->linkID;
+        $get_info_result = $student->getInfo($mysqli, $response);
+        if ($get_info_result == $response->RESULT_OK) {
+            $get_info_result = $student;
+        }
+        break;
+    case 'teacher':
+        $teacher = new Teacher();
+        $teacher->teacherID = $user->linkID;
+        $get_info_result = $teacher->getInfo($mysqli, $response);
+        if ($get_info_result == $response->RESULT_OK) {
+            $get_info_result = $teacher;
+        }
+        break;
+    default:
+        $get_info_result = $response->USER_TYPE_ERROR;
+        break;
+}
 update_session();
 $mysqli->close();
 if (is_int($get_info_result)) {

@@ -40,6 +40,7 @@ if ($code == $response->RESULT_OK) {
     session_start();
     $_SESSION['user_id'] = $user->userID;
     $_SESSION['user_type'] = $user->userType;
+    $_SESSION['link_id'] = $user->linkID;
     $response->data = array('userType' => $user->userType);
 }
 $mysqli->close();

@@ -24,6 +24,7 @@ require DIR . '/classes/response/RegisterResponse.php';
 require DIR . '/classes/response/UpdatePasswordResponse.php';
 require DIR . '/classes/response/GetInfoResponse.php';
 require DIR . '/classes/response/UpdateInfoResponse.php';
+require DIR . '/classes/response/NewCourseResponse.php';
 
 require DIR . '/helpers/func.php';
 

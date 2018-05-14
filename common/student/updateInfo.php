@@ -28,13 +28,9 @@ $mysqli = check_database($response);
 $user = new User();
 $user->userID = $_SESSION['user_id'];
 $user->userType = $_SESSION['user_type'];
+$user->linkID = $_SESSION['link_id'];
 if ($user->userType != 'student') {
     $response->format($response->USER_TYPE_ERROR);
-    return_data($response);
-}
-$link_id_result = $user->get_link_id($mysqli, $response);
-if ($link_id_result != $response->RESULT_OK) {
-    $response->format($link_id_result);
     return_data($response);
 }
 $student = new Student();

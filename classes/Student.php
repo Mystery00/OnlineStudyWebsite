@@ -26,7 +26,7 @@ class Student
         if ($result == TRUE)
             return $response->RESULT_OK;
         else
-            return $response->REGISTER_ERROR;
+            return $response->UNKNOWN_ERROR;
     }
 
     function getInfo(mysqli $mysqli, GetInfoResponse $response)

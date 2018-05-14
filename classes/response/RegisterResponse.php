@@ -11,7 +11,6 @@ class RegisterResponse extends Response
     var $EMPTY_FIELD_USERNAME = 11;
     var $EMPTY_FIELD_PASSWORD = 12;
     var $EXIST_USER = 13;
-    var $REGISTER_ERROR = 14;
 
     public function format($code)
     {
