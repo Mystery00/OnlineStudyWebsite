@@ -1,11 +1,3 @@
-
-drop table if exists tb_choose;
-drop table if exists tb_course;
-drop table if exists tb_resource;
-drop table if exists tb_student;
-drop table if exists tb_teacher;
-drop table if exists tb_user;
-
 CREATE SCHEMA `db_online_study_website` DEFAULT CHARACTER SET utf8 ;
 
 
